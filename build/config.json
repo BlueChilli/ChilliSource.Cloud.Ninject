@@ -1,0 +1,14 @@
+{
+	"productName" : "ChilliSource Cloud Ninject",
+	"projectName" : "ChilliSource.Cloud.Ninject",
+	"githubOwner": "BlueChilli",
+	"githubRepository": "ChilliSource.Cloud.Ninject",
+	"packageWhiteList": ["ChilliSource.Cloud.Ninject"],
+	"solutionFile" : "../src/ChilliSource.Cloud.Ninject.sln",
+	"tags": [ "ChilliSource", "ChilliSource Cloud Ninject"],
+	"authors" : ["Blue Chilli Technology Pty Ltd"],
+	"copyright" : "Copyright Blue Chilli Technology Pty Ltd 2017",
+	"iconUrl": "https://avatars0.githubusercontent.com/u/5924219?v=3&s=200",
+	"testProjectPath": "../src/ChilliSource.Cloud.Ninject.Tests/ChilliSource.Cloud.Ninject.Tests.csproj",
+	"nuspecRootPath" : "../"
+}
