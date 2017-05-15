@@ -14,21 +14,23 @@ namespace ChilliSource.Cloud.Ninject
 {
     internal class ScopeContextFactory : IScopeContextFactorySetup, IScopeContextFactory
     {
+        readonly string _scopeName;
+
         ChildKernel _contextKernel;
-        string _scopeName;
         List<Type> _singletonTypes;
 
         internal ScopeContextFactory(IKernel defaultKernel)
         {
+            var thisFactory = this;
+
             _singletonTypes = new List<Type>();
             _scopeName = typeof(ScopeContextFactory).FullName;
             _contextKernel = new ChildKernel(defaultKernel, new NinjectSettings() { AllowNullInjection = true });
 
             _contextKernel.GetBindings(typeof(IKernel)).ToList().ForEach(b =>
                 _contextKernel.RemoveBinding(b));
-            _contextKernel.Bind<IKernel>().ToMethod(ctx => _contextKernel);
 
-            _contextKernel.Bind<ScopeContextFactory>().ToMethod(ctx => this).InNamedScope(_scopeName);
+            _contextKernel.Bind<ScopeValidation>().ToMethod(ctx => new ScopeValidation(thisFactory)).InNamedScope(_scopeName);
             _contextKernel.Bind<InScopeValuesHolder>().ToSelf().InNamedScope(_scopeName);
 
             _contextKernel.GetBindings(typeof(IResolver)).ToList().ForEach(b =>
@@ -40,7 +42,7 @@ namespace ChilliSource.Cloud.Ninject
         {
             _singletonTypes.Add(type);
 
-            _contextKernel.Bind(type).ToMethod(ctx => ctx.ContextPreservingGet<InScopeValuesHolder>().GetSingletonValue(type));
+            _contextKernel.Bind(type).ToMethod(ctx => ctx.ContextPreservingGet<InScopeValuesHolder>().GetSingletonValue(type)).InNamedScope(_scopeName);
         }
 
         internal void ValidateSingletonType(Type type)
@@ -61,7 +63,7 @@ namespace ChilliSource.Cloud.Ninject
 
         public IScopeContext CreateScope()
         {
-            return new ScopeContext(_contextKernel, _scopeName);
+            return new ScopeContext(_contextKernel.CreateNamedScope(_scopeName));
         }
 
         bool disposed = false;
@@ -72,6 +74,20 @@ namespace ChilliSource.Cloud.Ninject
 
             disposed = true;
             _contextKernel.Dispose();
+        }
+    }
+
+    internal class ScopeValidation
+    {
+        ScopeContextFactory _factory;
+        public ScopeValidation(ScopeContextFactory factory)
+        {
+            _factory = factory;
+        }
+
+        internal void ValidateSingletonType(Type type)
+        {
+            _factory.ValidateSingletonType(type);
         }
     }
 }

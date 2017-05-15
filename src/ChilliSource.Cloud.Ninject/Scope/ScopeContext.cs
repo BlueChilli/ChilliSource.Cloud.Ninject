@@ -14,10 +14,10 @@ namespace ChilliSource.Cloud.Ninject
         NamedScope _scope;
         IResolver _resolver;
 
-        public ScopeContext(IKernel kernel, string scopeName)
+        public ScopeContext(NamedScope scope)
         {
-            _scope = kernel.CreateNamedScope(scopeName);
-            _resolver = _scope.Get<IResolver>();
+            _scope = scope;
+            _resolver = scope.Get<IResolver>();
         }
 
         public T Get<T>()
@@ -44,5 +44,5 @@ namespace ChilliSource.Cloud.Ninject
             disposed = true;
             _scope.Dispose();
         }
-    }    
+    }
 }
