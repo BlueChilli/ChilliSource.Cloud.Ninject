@@ -13,7 +13,7 @@ namespace ChilliSource.Cloud.Ninject
     /// Default depency resolver for Ninject. It should be registered using the interface IResolver. e.g.:
     /// kernel.Bind<IResolver>().ToMethod(ctx => new DefaultDependecyResolver(ctx.GetContextPreservingResolutionRoot()));
     /// </summary>
-    public class NinjectDependecyResolver : IResolver
+    public class NinjectDependecyResolver : IServiceResolver
     {
         private readonly object _localLock = new object();
         IResolutionRoot _root;

@@ -5,21 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="xunit" Version="2.2.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ChilliSource.Cloud.Ninject\ChilliSource.Cloud.Ninject.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>    
-    <PackageReference Include="Ninject" Version="3.2.2.0" />
-    <PackageReference Include="Ninject.Extensions.ChildKernel" Version="3.2.0.0" />
-    <PackageReference Include="Ninject.Extensions.ContextPreservation" Version="3.2.0.0" />
-    <PackageReference Include="Ninject.Extensions.NamedScope" Version="3.2.0.0" />
-    <PackageReference Include="Serilog" Version="2.4.0" />
-    <PackageReference Include="ChilliSource.Cloud.Core" Version="1.0.0" />
-  </ItemGroup>
+  </ItemGroup>  
   
 </Project>

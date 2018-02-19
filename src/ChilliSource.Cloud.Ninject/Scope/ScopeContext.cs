@@ -12,12 +12,12 @@ namespace ChilliSource.Cloud.Ninject
     internal class ScopeContext : IScopeContext
     {
         NamedScope _scope;
-        IResolver _resolver;
+        IServiceResolver _resolver;
 
         public ScopeContext(NamedScope scope)
         {
             _scope = scope;
-            _resolver = scope.Get<IResolver>();
+            _resolver = scope.Get<IServiceResolver>();
         }
 
         public T Get<T>()

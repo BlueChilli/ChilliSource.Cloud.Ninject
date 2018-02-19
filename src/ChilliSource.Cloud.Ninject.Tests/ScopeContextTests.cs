@@ -130,7 +130,7 @@ namespace ChilliSource.Cloud.Ninject.Tests
             public CustomValue CustomValue { get; private set; }
 
             [Inject]
-            public IResolver Resolver { get; set; }
+            public IServiceResolver Resolver { get; set; }
 
             public MyServiceA(MyServiceB service2, CustomValue value)
             {
