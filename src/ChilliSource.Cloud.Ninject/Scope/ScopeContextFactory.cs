@@ -31,11 +31,7 @@ namespace ChilliSource.Cloud.Ninject
                 _contextKernel.RemoveBinding(b));
 
             _contextKernel.Bind<ScopeValidation>().ToMethod(ctx => new ScopeValidation(thisFactory)).InNamedScope(_scopeName);
-            _contextKernel.Bind<InScopeValuesHolder>().ToSelf().InNamedScope(_scopeName);
-
-            _contextKernel.GetBindings(typeof(IServiceResolver)).ToList().ForEach(b =>
-                _contextKernel.RemoveBinding(b));
-            _contextKernel.Bind<IServiceResolver>().ToMethod(ctx => new NinjectDependecyResolver(ctx.GetContextPreservingResolutionRoot())).InNamedScope(_scopeName);
+            _contextKernel.Bind<InScopeValuesHolder>().ToSelf().InNamedScope(_scopeName);            
         }
 
         public void RegisterSingletonType(Type type)
@@ -54,6 +50,10 @@ namespace ChilliSource.Cloud.Ninject
         public void RegisterServices(ScopeContextHelper.RegisterServices registerServicesAction)
         {
             registerServicesAction(_contextKernel, (syntax) => NamedScopeExtensionMethods.InNamedScope((dynamic)syntax, _scopeName));
+
+            _contextKernel.GetBindings(typeof(IServiceResolver)).ToList().ForEach(b =>
+                _contextKernel.RemoveBinding(b));
+            _contextKernel.Bind<IServiceResolver>().ToMethod(ctx => new NinjectDependecyResolver(ctx.GetContextPreservingResolutionRoot())).InNamedScope(_scopeName);
         }
 
         public void Register(Action<IKernel> action)
